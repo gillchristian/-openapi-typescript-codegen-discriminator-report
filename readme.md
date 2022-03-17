@@ -1,5 +1,8 @@
 # openapi-typescript-codegen-discriminator-report
 
+Example to reproduce issue with discriminators on
+[ferdikoomen/openapi-typescript-codegen #985](https://github.com/ferdikoomen/openapi-typescript-codegen/issues/985)
+
 ### Working example
 
 Given a `oneOf` schema consisting of two refs, each of one has a `type` property

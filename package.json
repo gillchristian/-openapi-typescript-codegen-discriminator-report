@@ -1,0 +1,15 @@
+{
+  "name": "openapi-typescript-codegen-discriminator-report",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:gillchristian/openapi-typescript-codegen-discriminator-report.git",
+  "author": "gillchristian <gillchristiang@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "gen": "openapi --input open-api.yaml --output generated --client fetch --name MyApi --useOptions --useUnionTypes"
+  },
+  "dependencies": {
+    "openapi-typescript-codegen": "^0.20.1",
+    "typescript": "^4.6.2"
+  }
+}

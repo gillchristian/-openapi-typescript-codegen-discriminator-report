@@ -1,0 +1,112 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Test API
+  license:
+    name: MIT
+servers:
+  - url: https://api.test.com
+paths:
+  /discriminator-simple:
+    get:
+      operationId: getDiscriminatorSimple
+      summary: Get discriminator simple
+      responses:
+        '200':
+          description: Get discriminator simple
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/DiscriminatorSimple'
+  /discriminator-complex:
+    get:
+      operationId: getDiscriminatorComplex
+      summary: Get discriminator complex
+      responses:
+        '200':
+          description: Get discriminator complex
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/DiscriminatorComplex'
+components:
+  schemas:
+    # --- Simple discriminator example -----------------------------------------
+    AorB:
+      type: string
+      enum:
+        - a
+        - b
+    A:
+      type: object
+      required:
+        - a
+        - tag
+      properties:
+        a:
+          type: string
+        tag:
+          '$ref': '#/components/schemas/AorB'
+    B:
+      type: object
+      required:
+        - b
+        - tag
+      properties:
+        b:
+          type: string
+        tag:
+          '$ref': '#/components/schemas/AorB'
+    DiscriminatorSimple:
+      discriminator:
+        propertyName: tag
+        mapping:
+          a: '#/components/schemas/A'
+          b: '#/components/schemas/B'
+      oneOf:
+        - '$ref': '#/components/schemas/A'
+        - '$ref': '#/components/schemas/B'
+
+    # --- Complex discriminator example ----------------------------------------
+    DiscriminatorType:
+      type: string
+      enum:
+        - one
+        - two
+    Base:
+      type: object
+      required:
+        - id
+        - tag
+      properties:
+        id:
+          type: string
+        tag:
+          '$ref': '#/components/schemas/DiscriminatorType'
+    One:
+      allOf:
+        - '$ref': '#/components/schemas/Base'
+        - type: object
+          required:
+            - one
+          properties:
+            one:
+              type: string
+    Two:
+      allOf:
+        - '$ref': '#/components/schemas/Base'
+        - type: object
+          required:
+            - two
+          properties:
+            two:
+              type: string
+    DiscriminatorComplex:
+      discriminator:
+        propertyName: tag
+        mapping:
+          one: '#/components/schemas/One'
+          two: '#/components/schemas/Two'
+      oneOf:
+        - '$ref': '#/components/schemas/One'
+        - '$ref': '#/components/schemas/Two'
